@@ -2,14 +2,111 @@
 
 [ext_resource type="PackedScene" uid="uid://b8y02c78mib4c" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="TileSet" uid="uid://d1gl6yuyvear5" path="res://res/main_tileset.tres" id="1_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://dwupcgoubbfpa" path="res://assets/sprites.png" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://b5tsubgrmsspd" path="res://scenes/box.tscn" id="3_p57ef"]
+[ext_resource type="Script" uid="uid://b6bntqilo5ak4" path="res://scenes/floppy.gd" id="4_lbhrr"]
+[ext_resource type="Script" uid="uid://cbysgfaki1cwi" path="res://common/skill.gd" id="5_iywne"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_72mox"]
+atlas = ExtResource("3_lnu2h")
+region = Rect2(36, 3, 9, 9)
+
+[sub_resource type="Resource" id="Resource_lbhrr"]
+script = ExtResource("5_iywne")
+name = "PUSH.EXE"
+type = 1
+metadata/_custom_type_script = "uid://cbysgfaki1cwi"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofo7f"]
+size = Vector2(8, 8)
 
 [node name="Game" type="Node2D" unique_id=1854467454]
+y_sort_enabled = true
 
-[node name="MainTileMapLayer" type="TileMapLayer" parent="." unique_id=1673376984]
-tile_map_data = PackedByteArray("AAADAAIAAAACAAEAAAADAAMAAAACAAEAAAAEAAMAAAACAAEAAAAEAAQAAAACAAEAAAADAAQAAAACAAEAAAAEAAIAAAACAAEAAAAFAAIAAAACAAEAAAAGAAIAAAACAAEAAAAGAAMAAAACAAEAAAAFAAMAAAACAAEAAAAFAAQAAAACAAEAAAAGAAQAAAACAAEAAAADAAUAAAACAAEAAAAEAAUAAAACAAEAAAAFAAUAAAACAAEAAAAGAAUAAAACAAEAAAAHAAUAAAACAAEAAAAHAAQAAAACAAEAAAAHAAMAAAACAAEAAAAHAAIAAAACAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAAGAAEAAAACAAAAAAAHAAEAAAACAAAAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAACAAIAAAAIAAEAAAADAAMAAAAIAAIAAAACAAAAAAAIAAQAAAADAAIAAAAIAAUAAAACAAMAAAAIAAYAAAACAAQAAAAHAAYAAAABAAQAAAAGAAYAAAABAAQAAAAFAAYAAAABAAQAAAAEAAYAAAABAAQAAAADAAYAAAABAAQAAAACAAYAAAAAAAQAAAACAAUAAAAAAAMAAAACAAQAAAAAAAMAAAACAAMAAAAAAAMAAAACAAIAAAAAAAMAAAACAAEAAAAAAAMAAAACAAAAAAAAAAIAAAA=")
+[node name="MainWalls" type="TileMapLayer" parent="." unique_id=1673376984]
+tile_map_data = PackedByteArray("AAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAAGAAEAAAACAAAAAAAHAAEAAAACAAAAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAACAAIAAAAIAAEAAAAAAAQAAAAIAAIAAAACAAAAAAAIAAQAAAAAAAIAAAAIAAUAAAACAAMAAAAIAAYAAAACAAQAAAAHAAYAAAABAAQAAAAGAAYAAAAAAAIAAAAEAAYAAAACAAIAAAADAAYAAAABAAQAAAACAAYAAAAAAAQAAAACAAUAAAAAAAMAAAACAAQAAAAAAAMAAAACAAEAAAAAAAMAAAACAAAAAAAAAAIAAAAJAAQAAAABAAIAAAAKAAQAAAABAAIAAAALAAQAAAACAAIAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAJAAEAAAABAAIAAAAKAAEAAAABAAIAAAALAAEAAAACAAQAAAALAAAAAAAAAAIAAAAMAAAAAAABAAIAAAANAAAAAAABAAIAAAAOAAAAAAABAAIAAAAPAAAAAAABAAIAAAAQAAAAAAABAAIAAAARAAAAAAACAAIAAAARAAEAAAACAAMAAAARAAIAAAACAAMAAAARAAMAAAACAAMAAAARAAQAAAACAAMAAAARAAUAAAACAAMAAAARAAYAAAACAAQAAAAQAAYAAAABAAQAAAAPAAYAAAABAAQAAAAOAAYAAAABAAQAAAANAAYAAAABAAQAAAAMAAYAAAABAAQAAAALAAYAAAAAAAQAAAALAAUAAAAAAAMAAAAMAAEAAAACAAAAAAANAAEAAAACAAAAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAACAAIAAAAAAAMAAAACAAMAAAAAAAMAAAAGAAcAAAACAAMAAAAGAAgAAAACAAMAAAAGAAkAAAACAAMAAAAGAAoAAAACAAMAAAAEAAcAAAACAAMAAAAEAAgAAAACAAMAAAAEAAkAAAACAAMAAAAEAAoAAAACAAMAAAA=")
 tile_set = ExtResource("1_yqjtg")
 
 [node name="Player" parent="." unique_id=753467072 instance=ExtResource("1_uwrxv")]
-position = Vector2(89, 60)
+y_sort_enabled = true
+position = Vector2(89, 46)
+push_sensor_offsets = Dictionary[int, Vector2]({
+0: Vector2(0, 8),
+1: Vector2(-7, 4),
+2: Vector2(0, 0),
+3: Vector2(7, 4)
+})
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1990455520]
+
+[node name="Box" parent="." unique_id=2141330963 instance=ExtResource("3_p57ef")]
+position = Vector2(88, 104)
+
+[node name="GUI" type="CanvasLayer" parent="." unique_id=1012686815]
+visible = false
+
+[node name="Control" type="Control" parent="GUI" unique_id=1227146815]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 16.0
+grow_horizontal = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GUI/Control" unique_id=95345363]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HeartsContainer" type="HBoxContainer" parent="GUI/Control" unique_id=781130855]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -4.5
+offset_right = 35.0
+offset_bottom = 4.5
+grow_vertical = 2
+
+[node name="Heart0" type="TextureRect" parent="GUI/Control/HeartsContainer" unique_id=770279787]
+layout_mode = 2
+texture = SubResource("AtlasTexture_72mox")
+stretch_mode = 2
+
+[node name="Heart1" type="TextureRect" parent="GUI/Control/HeartsContainer" unique_id=256358774]
+layout_mode = 2
+texture = SubResource("AtlasTexture_72mox")
+stretch_mode = 2
+
+[node name="Heart2" type="TextureRect" parent="GUI/Control/HeartsContainer" unique_id=667061579]
+layout_mode = 2
+texture = SubResource("AtlasTexture_72mox")
+stretch_mode = 2
+
+[node name="Floppy" type="Area2D" parent="." unique_id=209868737]
+position = Vector2(237, 57)
+script = ExtResource("4_lbhrr")
+granted_skill = SubResource("Resource_lbhrr")
+
+[node name="Shadow" type="Sprite2D" parent="Floppy" unique_id=445796211]
+self_modulate = Color(1, 1, 1, 0.1254902)
+z_index = -1
+position = Vector2(0, 3)
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(117, 7, 6, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Floppy" unique_id=1643105848]
+position = Vector2(0, -4)
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(68, 5, 7, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floppy" unique_id=1455199824]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_ofo7f")

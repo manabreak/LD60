@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cwg13yqyr75o6" path="res://scenes/topdown_sprite.gd" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://djdst8alknahd" path="res://player/states/idle_state.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://mpolm87vtxik" path="res://player/states/move_state.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://dm7nuecyq12ko" path="res://player/states/rotation_state.gd" id="7_fjrip"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_72mox"]
 size = Vector2(10, 4)
@@ -304,18 +305,37 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=753467072 node_paths=PackedStringArray("state_machine")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofo7f"]
+size = Vector2(4, 4)
+
+[node name="Player" type="CharacterBody2D" unique_id=753467072 node_paths=PackedStringArray("push_sensor", "sprite", "state_machine")]
 motion_mode = 1
 script = ExtResource("1_g2els")
+push_sensor_offsets = Dictionary[int, Vector2]({
+0: Vector2(0, 8),
+2: Vector2(0, 0),
+3: Vector2(7, 4)
+})
+push_sensor = NodePath("PushSensor")
+sprite = NodePath("TopdownSprite")
 state_machine = NodePath("StateMachine")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1259142480]
+self_modulate = Color(1, 1, 1, 0.11372549)
+z_index = -1
+position = Vector2(0, 6)
+texture = ExtResource("1_3vyb7")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
 
 [node name="MoveCollider" type="CollisionShape2D" parent="." unique_id=1627160824]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_72mox")
 
 [node name="TopdownSprite" type="AnimatedSprite2D" parent="." unique_id=1489406227 node_paths=PackedStringArray("entity")]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_72mox")
-animation = &"sword_north"
+animation = &"idle_east"
 script = ExtResource("3_qlg0r")
 entity = NodePath("..")
 
@@ -340,4 +360,16 @@ player = NodePath("../../..")
 sprite = NodePath("../../../TopdownSprite")
 metadata/_custom_type_script = "uid://mpolm87vtxik"
 
+[node name="RotationState" type="Node" parent="StateMachine/States" unique_id=1777666060 node_paths=PackedStringArray("player", "sprite")]
+script = ExtResource("7_fjrip")
+player = NodePath("../../..")
+sprite = NodePath("../../../TopdownSprite")
+metadata/_custom_type_script = "uid://dm7nuecyq12ko"
+
 [node name="Transitions" type="Node" parent="StateMachine" unique_id=1954841492]
+
+[node name="PushSensor" type="Area2D" parent="." unique_id=844699875]
+position = Vector2(0, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PushSensor" unique_id=93787146]
+shape = SubResource("RectangleShape2D_ofo7f")
