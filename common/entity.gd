@@ -34,6 +34,11 @@ func on_died() -> void:
 	queue_free()
 
 
+func _process(delta: float) -> void:
+	if health != null:
+		health.update(delta)
+
+
 func _physics_process(delta: float) -> void:
 	if state_machine != null:
 		state_machine.update(delta)

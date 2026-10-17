@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://b6bntqilo5ak4" path="res://scenes/floppy.gd" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://cbysgfaki1cwi" path="res://common/skill.gd" id="5_iywne"]
 [ext_resource type="Theme" uid="uid://dl82d2ubs8d6w" path="res://res/new_theme.tres" id="8_gee14"]
+[ext_resource type="Script" uid="uid://drplpfm7jsqhv" path="res://scenes/hearts_container.gd" id="8_vtaks"]
+[ext_resource type="Script" uid="uid://b8ap8kxxminu3" path="res://common/heart.gd" id="10_vtaks"]
 
 [sub_resource type="Resource" id="Resource_lbhrr"]
 script = ExtResource("5_iywne")
@@ -22,12 +24,16 @@ size = Vector2(8, 8)
 atlas = ExtResource("3_lnu2h")
 region = Rect2(36, 3, 9, 9)
 
-[node name="Game" type="Node2D" unique_id=1854467454 node_paths=PackedStringArray("player", "skill_view", "skill_label")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72mox"]
+size = Vector2(8, 10)
+
+[node name="Game" type="Node2D" unique_id=1854467454 node_paths=PackedStringArray("player", "skill_view", "skill_label", "hearts")]
 y_sort_enabled = true
 script = ExtResource("1_u5sy4")
 player = NodePath("Player")
 skill_view = NodePath("GUI/FullRoot/ColorRect")
 skill_label = NodePath("GUI/FullRoot/ColorRect/MarginContainer/SkillLabel")
+hearts = NodePath("GUI/TopBar/HeartsContainer")
 
 [node name="MainWalls" type="TileMapLayer" parent="." unique_id=1673376984]
 tile_map_data = PackedByteArray("AAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAAGAAEAAAACAAAAAAAHAAEAAAACAAAAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAACAAIAAAAIAAEAAAAAAAQAAAAIAAIAAAACAAAAAAAIAAQAAAAAAAIAAAAIAAUAAAACAAMAAAAIAAYAAAACAAQAAAAHAAYAAAABAAQAAAAGAAYAAAAAAAIAAAAEAAYAAAACAAIAAAADAAYAAAABAAQAAAACAAYAAAAAAAQAAAACAAUAAAAAAAMAAAACAAQAAAAAAAMAAAACAAEAAAAAAAMAAAACAAAAAAAAAAIAAAAJAAQAAAABAAIAAAAKAAQAAAABAAIAAAALAAQAAAACAAIAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAJAAEAAAABAAIAAAAKAAEAAAABAAIAAAALAAEAAAACAAQAAAALAAAAAAAAAAIAAAAMAAAAAAABAAIAAAANAAAAAAABAAIAAAAOAAAAAAABAAIAAAAPAAAAAAABAAIAAAAQAAAAAAABAAIAAAARAAAAAAACAAIAAAARAAEAAAACAAMAAAARAAIAAAACAAMAAAARAAMAAAACAAMAAAARAAQAAAACAAMAAAARAAUAAAACAAMAAAARAAYAAAACAAQAAAAQAAYAAAABAAQAAAAPAAYAAAABAAQAAAAOAAYAAAABAAQAAAANAAYAAAABAAQAAAAMAAYAAAABAAQAAAALAAYAAAAAAAQAAAALAAUAAAAAAAMAAAAMAAEAAAACAAAAAAANAAEAAAACAAAAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAACAAIAAAAAAAMAAAACAAMAAAAAAAMAAAAGAAcAAAACAAMAAAAGAAgAAAACAAMAAAAGAAkAAAACAAMAAAAGAAoAAAAAAAQAAAAEAAcAAAACAAMAAAAEAAgAAAACAAMAAAAEAAkAAAACAAMAAAAEAAoAAAACAAQAAAAGAAsAAAACAAAAAAAEAAsAAAACAAAAAAADAAoAAAAAAAIAAAADAAsAAAAAAAMAAAADAAwAAAAAAAMAAAADAA0AAAAAAAMAAAADAA4AAAAAAAMAAAADAA8AAAAAAAQAAAAEAA8AAAABAAQAAAAFAA8AAAABAAQAAAAGAA8AAAABAAQAAAAHAA8AAAABAAQAAAAIAA8AAAABAAQAAAAHAAoAAAABAAQAAAAIAAoAAAABAAQAAAAJAAoAAAABAAQAAAAHAAsAAAACAAAAAAAIAAsAAAACAAAAAAAJAAsAAAACAAAAAAAKAAsAAAACAAAAAAAKAAoAAAABAAIAAAALAAoAAAACAAIAAAALAAsAAAAAAAQAAAALAAwAAAACAAAAAAAMAAwAAAACAAAAAAANAAwAAAACAAAAAAAMAAsAAAABAAIAAAANAAsAAAABAAIAAAALAA4AAAAAAAIAAAAMAA4AAAABAAIAAAANAA4AAAABAAIAAAALAA8AAAACAAQAAAAKAA8AAAABAAQAAAAJAA8AAAABAAQAAAA=")
@@ -89,7 +95,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="HeartsContainer" type="HBoxContainer" parent="GUI/TopBar" unique_id=781130855]
+[node name="HeartsContainer" type="HBoxContainer" parent="GUI/TopBar" unique_id=781130855 node_paths=PackedStringArray("hearts")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -98,6 +104,8 @@ offset_top = -4.5
 offset_right = 35.0
 offset_bottom = 4.5
 grow_vertical = 2
+script = ExtResource("8_vtaks")
+hearts = [NodePath("Heart0"), NodePath("Heart1"), NodePath("Heart2")]
 
 [node name="Heart0" type="TextureRect" parent="GUI/TopBar/HeartsContainer" unique_id=770279787]
 layout_mode = 2
@@ -154,3 +162,26 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2901961)
 theme_override_constants/shadow_offset_x = 0
 text = "PROGRAM FOUND!"
 horizontal_alignment = 1
+
+[node name="Heart" type="Area2D" parent="." unique_id=2088902931 node_paths=PackedStringArray("player")]
+position = Vector2(64, 66)
+script = ExtResource("10_vtaks")
+player = NodePath("../Player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Heart" unique_id=1380360966]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_72mox")
+
+[node name="Shadow" type="Sprite2D" parent="Heart" unique_id=1163919685]
+self_modulate = Color(1, 1, 1, 0.1254902)
+z_index = -1
+position = Vector2(0, 3)
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(117, 7, 6, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Heart" unique_id=1392665202]
+position = Vector2(0, -3)
+texture = ExtResource("3_lnu2h")
+region_enabled = true
+region_rect = Rect2(36, 4, 8, 7)

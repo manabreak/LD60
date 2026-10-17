@@ -4,11 +4,20 @@ extends Node2D
 @export var player: Player
 @export var skill_view: Control
 @export var skill_label: Label
-
+@export var hearts: HeartsUI
 
 func _ready() -> void:
-	# start_game()
-	pass
+	player.health.health_changed.connect(self.on_player_health_changed)
+	player.health.died.connect(self.on_player_died)
+
+
+func on_player_health_changed(old_health: int, new_health: int) -> void:
+	hearts.update_hearts(old_health, new_health)
+
+
+func on_player_died() -> void:
+	await get_tree().create_timer(2.0).timeout
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 func start_game() -> void:
@@ -45,7 +54,7 @@ func grant_skill(skill: Skill) -> void:
 	await get_tree().create_timer(2.0).timeout
 	
 	player.state_machine.request_state("RotationState")
-	skill_label.text = "Installing %s..." % skill.name
+	skill_label.text = "Installing %s" % skill.name
 	
 	await get_tree().create_timer(2.0).timeout
 	player.state_machine.request_state("IdleState")

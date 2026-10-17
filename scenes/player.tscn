@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dm7nuecyq12ko" path="res://player/states/rotation_state.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://4khcivs0mqbn" path="res://player/states/grant_skill_state.gd" id="8_smehm"]
 [ext_resource type="Script" uid="uid://bbra2yi3m2bv7" path="res://player/states/sword_state.gd" id="9_ur7pv"]
+[ext_resource type="Script" uid="uid://0m54hc8i5xxp" path="res://player/states/death_state.gd" id="11_d2wvv"]
 
 [sub_resource type="Resource" id="Resource_gee14"]
 script = ExtResource("2_y4r1p")
@@ -517,6 +518,9 @@ script = ExtResource("9_ur7pv")
 player = NodePath("../../..")
 player_sprite = NodePath("../../../TopdownSprite")
 sword_sprite = NodePath("../../../SwordSprite")
+
+[node name="DeathState" type="Node" parent="StateMachine/States" unique_id=1038335339]
+script = ExtResource("11_d2wvv")
 
 [node name="Transitions" type="Node" parent="StateMachine" unique_id=1954841492]
 
