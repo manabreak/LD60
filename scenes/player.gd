@@ -9,6 +9,7 @@ const DIR_MARGIN = 0.1
 @export var sword_collision_shape: CollisionShape2D
 
 func _ready() -> void:
+	super._ready()
 	sword_collision_shape.disabled = true
 	sword_sensor.body_entered.connect(self.on_sword_entered)
 	
@@ -28,6 +29,7 @@ func on_died() -> void:
 
 
 func on_sword_entered(body: Node2D) -> void:
+	print("Sword entered: %s" % body.name)
 	if body is Entity && body != self:
 		var e = body as Entity
 		if e.health != null:
@@ -64,7 +66,8 @@ func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
 	if Input.is_action_just_pressed("attack") && has_skill(Skill.SkillType.SWORD):
-		state_machine.request_state("SwordState")
+		if state_machine.current_state_name == "IdleState" || state_machine.current_state_name == "MoveState":
+			state_machine.request_state("SwordState")
 	
 	if Input.is_action_just_pressed("damage_player"):
 		health.damage(1)

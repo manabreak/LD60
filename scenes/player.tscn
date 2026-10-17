@@ -16,6 +16,7 @@
 script = ExtResource("2_y4r1p")
 health = 3
 max_health = 3
+vulnerability_time = 1.0
 metadata/_custom_type_script = "uid://50jeet7m3hdq"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_72mox"]
@@ -439,6 +440,8 @@ animations = [{
 size = Vector2(10, 10)
 
 [node name="Player" type="CharacterBody2D" unique_id=753467072 node_paths=PackedStringArray("sword_sensor", "sword_collision_shape", "sprite", "state_machine")]
+collision_layer = 2
+collision_mask = 13
 motion_mode = 1
 script = ExtResource("1_g2els")
 sword_sensor_offsets = Dictionary[int, Vector2]({
@@ -476,6 +479,7 @@ entity = NodePath("..")
 
 [node name="SwordSprite" type="AnimatedSprite2D" parent="." unique_id=2041972009 node_paths=PackedStringArray("entity")]
 visible = false
+z_index = 1
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_smehm")
 animation = &"sword_south"
@@ -525,6 +529,8 @@ script = ExtResource("11_d2wvv")
 [node name="Transitions" type="Node" parent="StateMachine" unique_id=1954841492]
 
 [node name="SwordSensor" type="Area2D" parent="." unique_id=844699875]
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordSensor" unique_id=93787146]
 shape = SubResource("RectangleShape2D_ofo7f")

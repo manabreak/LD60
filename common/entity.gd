@@ -10,6 +10,7 @@ enum Direction {
 	EAST,
 }
 
+@export var player: Player
 @export var static_sprite: Sprite2D
 @export var sprite: TopdownSprite
 @export var state_machine: StateMachine

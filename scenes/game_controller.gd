@@ -5,10 +5,21 @@ extends Node2D
 @export var skill_view: Control
 @export var skill_label: Label
 @export var hearts: HeartsUI
+var levels: Array[Node2D]
 
 func _ready() -> void:
+	for level in $LevelNode.get_children():
+		levels.append(level)
+	enable_level(0)
+	
 	player.health.health_changed.connect(self.on_player_health_changed)
 	player.health.died.connect(self.on_player_died)
+
+
+func enable_level(level: int) -> void:
+	for old_level in levels:
+		$LevelNode.remove_child(old_level)
+	$LevelNode.add_child(levels[level])
 
 
 func on_player_health_changed(old_health: int, new_health: int) -> void:
@@ -55,7 +66,11 @@ func grant_skill(skill: Skill) -> void:
 	
 	player.state_machine.request_state("RotationState")
 	skill_label.text = "Installing %s" % skill.name
-	
 	await get_tree().create_timer(2.0).timeout
+	
+	if skill.type == Skill.SkillType.LEVEL:
+		var level = skill.level
+		enable_level(level)
+	
 	player.state_machine.request_state("IdleState")
 	skill_view.visible = false

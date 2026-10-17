@@ -13,7 +13,11 @@ func _ready() -> void:
 func on_direction_changed(entity: Entity, direction: Entity.Direction) -> void:
 	if current_animation != "":
 		Log.d("Direction changed for animation: %s" % direction)
-		play(current_animation + "_" + get_direction_string(direction))
+		var anim_name = current_animation + "_" + get_direction_string(direction)
+		if sprite_frames.has_animation(anim_name):
+			play(anim_name)
+		else:
+			play(name)
 
 
 func get_direction_string(direction: Entity.Direction) -> String:
@@ -28,5 +32,9 @@ func get_direction_string(direction: Entity.Direction) -> String:
 
 
 func play_anim(name: String) -> void:
-	play(name + "_" + get_direction_string(entity.direction))
+	var anim_name = name + "_" + get_direction_string(entity.direction)
+	if sprite_frames.has_animation(anim_name):
+		play(anim_name)
+	else:
+		play(name)
 	self.current_animation = name
