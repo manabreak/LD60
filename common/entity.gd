@@ -10,9 +10,10 @@ enum Direction {
 	EAST,
 }
 
+@export var static_sprite: Sprite2D
 @export var sprite: TopdownSprite
-@export var pushable: Pushable
 @export var state_machine: StateMachine
+@export var health: Health
 
 var direction: Direction = Direction.SOUTH:
 	set(value):
@@ -20,6 +21,17 @@ var direction: Direction = Direction.SOUTH:
 			direction = value
 			sprite.flip_h = direction == Direction.WEST
 			direction_changed.emit(self, value)
+
+
+func _ready() -> void:
+	if health != null:
+		health = health.duplicate()
+		health.died.connect(self.on_died)
+
+
+func on_died() -> void:
+	Log.d("%s died" % self.name)
+	queue_free()
 
 
 func _physics_process(delta: float) -> void:

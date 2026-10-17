@@ -2,12 +2,20 @@
 
 [ext_resource type="Texture2D" uid="uid://dwupcgoubbfpa" path="res://assets/sprites.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://khw0oxf5c41w" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://50jeet7m3hdq" path="res://common/health.gd" id="2_y4r1p"]
 [ext_resource type="Script" uid="uid://f6esgxnmxjg6" path="res://fsm/fsm.gd" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://cwg13yqyr75o6" path="res://scenes/topdown_sprite.gd" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://djdst8alknahd" path="res://player/states/idle_state.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://mpolm87vtxik" path="res://player/states/move_state.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://dm7nuecyq12ko" path="res://player/states/rotation_state.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://4khcivs0mqbn" path="res://player/states/grant_skill_state.gd" id="8_smehm"]
+[ext_resource type="Script" uid="uid://bbra2yi3m2bv7" path="res://player/states/sword_state.gd" id="9_ur7pv"]
+
+[sub_resource type="Resource" id="Resource_gee14"]
+script = ExtResource("2_y4r1p")
+health = 3
+max_health = 3
+metadata/_custom_type_script = "uid://50jeet7m3hdq"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_72mox"]
 size = Vector2(10, 4)
@@ -261,10 +269,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_487ah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_487ah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_487ah")
 }],
 "loop": 1,
 "name": &"sword_south",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -318,20 +332,125 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofo7f"]
-size = Vector2(4, 4)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdfoy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(40, 136, 32, 32)
 
-[node name="Player" type="CharacterBody2D" unique_id=753467072 node_paths=PackedStringArray("push_sensor", "sprite", "state_machine")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhpqf"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(72, 136, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5jhy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(104, 136, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(136, 136, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj30b"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(40, 168, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc3p3"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(72, 168, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hax0n"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(104, 168, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4otl"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(136, 168, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2b1d"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(40, 104, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs1tg"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(72, 104, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dvfe"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(104, 104, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_giy8y"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(136, 104, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_smehm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdfoy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhpqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5jhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_holxr")
+}],
+"loop": 0,
+"name": &"sword_east",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj30b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc3p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hax0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4otl")
+}],
+"loop": 0,
+"name": &"sword_north",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2b1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs1tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dvfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_giy8y")
+}],
+"loop": 0,
+"name": &"sword_south",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofo7f"]
+size = Vector2(10, 10)
+
+[node name="Player" type="CharacterBody2D" unique_id=753467072 node_paths=PackedStringArray("sword_sensor", "sword_collision_shape", "sprite", "state_machine")]
 motion_mode = 1
 script = ExtResource("1_g2els")
-push_sensor_offsets = Dictionary[int, Vector2]({
-0: Vector2(0, 8),
+sword_sensor_offsets = Dictionary[int, Vector2]({
+0: Vector2(0, 7),
+1: Vector2(-7, 4),
 2: Vector2(0, 0),
 3: Vector2(7, 4)
 })
-push_sensor = NodePath("PushSensor")
+sword_sensor = NodePath("SwordSensor")
+sword_collision_shape = NodePath("SwordSensor/CollisionShape2D")
 sprite = NodePath("TopdownSprite")
 state_machine = NodePath("StateMachine")
+health = SubResource("Resource_gee14")
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1259142480]
 self_modulate = Color(1, 1, 1, 0.11372549)
@@ -348,7 +467,17 @@ shape = SubResource("RectangleShape2D_72mox")
 [node name="TopdownSprite" type="AnimatedSprite2D" parent="." unique_id=1489406227 node_paths=PackedStringArray("entity")]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_72mox")
-animation = &"grant"
+animation = &"sword_south"
+frame = 3
+frame_progress = 0.7184527
+script = ExtResource("3_qlg0r")
+entity = NodePath("..")
+
+[node name="SwordSprite" type="AnimatedSprite2D" parent="." unique_id=2041972009 node_paths=PackedStringArray("entity")]
+visible = false
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_smehm")
+animation = &"sword_south"
 script = ExtResource("3_qlg0r")
 entity = NodePath("..")
 
@@ -383,10 +512,15 @@ metadata/_custom_type_script = "uid://dm7nuecyq12ko"
 script = ExtResource("8_smehm")
 sprite = NodePath("../../../TopdownSprite")
 
+[node name="SwordState" type="Node" parent="StateMachine/States" unique_id=541573853 node_paths=PackedStringArray("player", "player_sprite", "sword_sprite")]
+script = ExtResource("9_ur7pv")
+player = NodePath("../../..")
+player_sprite = NodePath("../../../TopdownSprite")
+sword_sprite = NodePath("../../../SwordSprite")
+
 [node name="Transitions" type="Node" parent="StateMachine" unique_id=1954841492]
 
-[node name="PushSensor" type="Area2D" parent="." unique_id=844699875]
-position = Vector2(0, 8)
+[node name="SwordSensor" type="Area2D" parent="." unique_id=844699875]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PushSensor" unique_id=93787146]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordSensor" unique_id=93787146]
 shape = SubResource("RectangleShape2D_ofo7f")

@@ -17,3 +17,5 @@ func update(delta: float) -> void:
 		sprite.play_anim("walk")
 		machine.request_state("MoveState")
 	
+	
+	
