@@ -6,6 +6,7 @@ const DIR_MARGIN = 0.1
 @export var skills: Array[Skill]
 @export var push_sensor_offsets: Dictionary[Entity.Direction, Vector2]
 @export var push_sensor: Area2D
+@export var game_controller: GameController
 
 var detected_pushable: Entity = null
 

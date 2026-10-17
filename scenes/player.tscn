@@ -7,9 +7,14 @@
 [ext_resource type="Script" uid="uid://djdst8alknahd" path="res://player/states/idle_state.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://mpolm87vtxik" path="res://player/states/move_state.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://dm7nuecyq12ko" path="res://player/states/rotation_state.gd" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://4khcivs0mqbn" path="res://player/states/grant_skill_state.gd" id="8_smehm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_72mox"]
 size = Vector2(10, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_md1ol"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(32, 64, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
 atlas = ExtResource("1_3vyb7")
@@ -145,6 +150,14 @@ region = Rect2(48, 16, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_72mox"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_md1ol")
+}],
+"loop": 1,
+"name": &"grant",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f1ej7")
@@ -335,7 +348,7 @@ shape = SubResource("RectangleShape2D_72mox")
 [node name="TopdownSprite" type="AnimatedSprite2D" parent="." unique_id=1489406227 node_paths=PackedStringArray("entity")]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_72mox")
-animation = &"idle_east"
+animation = &"grant"
 script = ExtResource("3_qlg0r")
 entity = NodePath("..")
 
@@ -365,6 +378,10 @@ script = ExtResource("7_fjrip")
 player = NodePath("../../..")
 sprite = NodePath("../../../TopdownSprite")
 metadata/_custom_type_script = "uid://dm7nuecyq12ko"
+
+[node name="GrantSkillState" type="Node" parent="StateMachine/States" unique_id=2000228784 node_paths=PackedStringArray("sprite")]
+script = ExtResource("8_smehm")
+sprite = NodePath("../../../TopdownSprite")
 
 [node name="Transitions" type="Node" parent="StateMachine" unique_id=1954841492]
 

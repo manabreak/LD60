@@ -3,7 +3,7 @@ extends Resource
 
 enum SkillType {
 	NONE,
-	PUSH,
+	SWORD,
 }
 
 @export var name: String

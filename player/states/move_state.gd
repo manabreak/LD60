@@ -2,7 +2,7 @@ class_name MoveState
 extends State
 
 const SPEED = 29.0
-const SPEED_PUSH = 29.0
+const SPEED_PUSH = 16.0
 const PUSH_DIR_MARGIN = 0.5
 
 @export var player: Player
@@ -15,7 +15,6 @@ func enter() -> void:
 
 func update(delta: float) -> void:
 	var pushing = player.detected_pushable != null && player.has_skill(Skill.SkillType.PUSH)
-	# Log.d("Pushing: %s" % pushing)
 	var direction = Input.get_vector("left", "right", "up", "down")
 	if direction.is_zero_approx():
 		player.velocity = Vector2.ZERO
